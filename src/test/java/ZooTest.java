@@ -1,35 +1,34 @@
-import org.example.model.LimiteVisiteurException;
-import org.example.model.TypeAnimal;
-import org.example.model.Zoo;
+import org.example.model.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class ZooTest {
-    public static void main(String[] args) {
-            // Création du zoo
-            Zoo zoo = new Zoo();
+    @Test
+    public void testLimiteVisiteursException() throws LimiteVisiteurException {
+        Zoo zoo = new Zoo(); // Limite de 2 visiteurs par secteur
+        Exception exp = null;
 
-            Exception exc = null;
-
-            // Ajout d'un secteur pour les chiens
-            zoo.ajouterSecteur(TypeAnimal.CHIEN);
-
-            // Ajouter des visiteurs jusqu'à la limite
-            for (int i = 0; i < 15; i++) {
-                try {
-                    zoo.nouveauVisiteur(); // Cela fonctionne tant qu'il y a de la place
-                } catch (LimiteVisiteurException e) {
-                    exc = e;
-                }
-            }
-
-            // Essayer d'ajouter un autre visiteur, ce qui devrait lancer une exception
-        try {
-            zoo.nouveauVisiteur(); // Doit lever LimiteVisiteurException
-        } catch (LimiteVisiteurException e) {
-            exc = e;
+        try{
+            zoo.nouveauVisiteur();
+            zoo.nouveauVisiteur();
+            zoo.nombreAnimaux();
+        }catch (Exception e){
+            exp = e;
         }
-        assert exc != null;
 
-        System.out.println("Test : "+exc);
-
+        Assert.assertNotNull(exp);
     }
+
+    @Test
+    public void AnimalDansMauvaisSecteur() throws LimiteVisiteurException {
+        Secteur secteur = new Secteur(TypeAnimal.CHAT);
+        Exception exp = null;
+        Animal chien = new Animal("choupi",TypeAnimal.CHIEN);
+        try {
+            secteur.ajouterAnimal(chien);
+        }catch (Exception e){
+            exp = e;
+        }
+        Assert.assertNotNull(exp);
+        System.out.println(exp);}
 }

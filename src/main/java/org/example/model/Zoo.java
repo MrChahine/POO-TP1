@@ -6,7 +6,7 @@ import java.util.List;
 public class Zoo {
     private List<Secteur> secteursAnimaux = new ArrayList<>();
     private int visiteurs = 0;
-    private final int nbVisiteurMaxParSecteur = 15;
+    private final int nbVisiteurMaxParSecteur = 2;
 
     public void ajouterSecteur(TypeAnimal typeAnimal) {
         secteursAnimaux.add(new Secteur(typeAnimal));
